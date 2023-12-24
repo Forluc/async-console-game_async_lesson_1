@@ -1,7 +1,7 @@
 import time
 import asyncio
 import curses
-
+from random import choice, randint
 
 TIC_TIMEOUT = 0.1
 
@@ -29,20 +29,17 @@ def draw(canvas):
     curses.curs_set(False)
     canvas.border()
 
-    first_star = blink(canvas, 5, 5)
-    second_star = blink(canvas, 5, 10)
-    third_star = blink(canvas, 5, 15)
-    fourth_star = blink(canvas, 5, 20)
-    fifth_star = blink(canvas, 5, 25)
+    symbols = ['+', '*', '.', ':']
+    number_of_stars = randint(50, 200)
 
-    coroutines = [first_star, second_star, third_star, fourth_star, fifth_star]
+    row, column = curses.window.getmaxyx(canvas)
+
+    coroutines = [blink(canvas, randint(0, row - 1), randint(0, column - 1), choice(symbols)) for _ in
+                  range(number_of_stars)]
 
     while True:
         for coroutine in coroutines.copy():
-            try:
-                coroutine.send(None)
-            except StopIteration:
-                coroutines.remove(coroutine)
+            coroutine.send(None)
         canvas.refresh()
         time.sleep(TIC_TIMEOUT)
 
