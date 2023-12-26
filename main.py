@@ -1,8 +1,9 @@
-import time
 import curses
-from animation.starship import animate_starship
-from animation.stars import get_stars
+import time
+
 from animation.fire import fire
+from animation.stars import get_stars
+from animation.starship import animate_starship
 
 TIC_TIMEOUT = 0.1
 

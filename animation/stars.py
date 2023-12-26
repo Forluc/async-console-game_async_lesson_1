@@ -1,6 +1,6 @@
 import asyncio
-from random import randint, choice
 import curses
+from random import choice, randint
 
 
 async def blink(canvas, row, column, symbol='*'):
